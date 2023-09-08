@@ -46,7 +46,7 @@ const Register = () => {
           <form onSubmit={handleRegister} className="card-body">
             <div className="form-control ">
               <label className="label">
-                <span className="label-text">Fill Name</span>
+                <span className="label-text font-bold">Fill Name</span>
               </label>
               <input
                 type="text"
@@ -58,7 +58,7 @@ const Register = () => {
             </div>
             <div className="form-control ">
               <label className="label">
-                <span className="label-text">Photo URL</span>
+                <span className="label-text font-bold">Photo URL</span>
               </label>
               <input
                 type="text"
@@ -70,7 +70,7 @@ const Register = () => {
             </div>
             <div className="form-control ">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text font-bold">Email</span>
               </label>
               <input
                 type="email"
@@ -82,11 +82,11 @@ const Register = () => {
             </div>
             <div className="form-control w-[100%]">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-bold">Password</span>
               </label>
               <input
                 type="password"
-                placeholder="password"
+                placeholder="minimum 6 digit provide"
                 name="password"
                 className="input input-bordered"
                 required
@@ -99,7 +99,7 @@ const Register = () => {
             </div>
             <div className="form-control ">
               <label className="label">
-                <span className="label-text">Bio</span>
+                <span className="label-text font-bold">Bio:</span>
               </label>
               <textarea
                 type="text"

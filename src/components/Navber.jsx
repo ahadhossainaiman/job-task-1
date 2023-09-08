@@ -37,17 +37,6 @@ const Navber = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
               <Link to="/login">LogIn</Link>
             </li>
             <li>
@@ -55,7 +44,9 @@ const Navber = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Task</a>
+        <a className="btn btn-ghost normal-case text-xl">
+          IBos Task Management
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
