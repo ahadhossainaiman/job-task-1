@@ -10,6 +10,7 @@ const ListTasks = ({ tasks, setTasks }) => {
   const [todos, setTodos] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [complete, setComplete] = useState([]);
+  const [selectedPriority, setSelectedPriority] = useState("All");
   useEffect(() => {
     const filterTodos = tasks?.filter((task) => task.status === "todo");
     const filterInProgress = tasks?.filter(
@@ -22,26 +23,53 @@ const ListTasks = ({ tasks, setTasks }) => {
   }, [tasks]);
 
   const statuses = ["todo", "inprogress", "complete"];
+  const handleSearch = (e) => {
+    setSelectedPriority(e.target.value);
+  };
+  console.log(selectedPriority);
   return (
-    <div className="flex lg:flex-row gap-20 sm:flex-col">
-      {statuses.map((status, index) => (
-        <Section
-          key={index}
-          status={status}
-          tasks={tasks}
-          setTasks={setTasks}
-          todos={todos}
-          inProgress={inProgress}
-          complete={complete}
-        />
-      ))}
+    <div>
+      <select
+        required
+        className="input input-bordered input-primary w-full max-w-xs block mx-auto my-8"
+        name="priority"
+        value={selectedPriority}
+        onChange={handleSearch}
+      >
+        <option value="All">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <div className="flex lg:flex-row gap-20 sm:flex-col">
+        {statuses.map((status, index) => (
+          <Section
+            key={index}
+            status={status}
+            tasks={tasks}
+            setTasks={setTasks}
+            todos={todos}
+            inProgress={inProgress}
+            complete={complete}
+            selectedPriority={selectedPriority}
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
 export default ListTasks;
 
-const Section = ({ status, tasks, setTasks, todos, inProgress, complete }) => {
+const Section = ({
+  status,
+  tasks,
+  setTasks,
+  todos,
+  inProgress,
+  complete,
+  selectedPriority,
+}) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item) => addItemToSection(item.id),
@@ -66,7 +94,7 @@ const Section = ({ status, tasks, setTasks, todos, inProgress, complete }) => {
   }
 
   const addItemToSection = (id) => {
-    console.log("droped", id, status);
+    // console.log("droped", id, status);
     setTasks((prev) => {
       //   console.log("aiman", prev);
       const modifyTask = prev.map((t) => {
@@ -75,29 +103,44 @@ const Section = ({ status, tasks, setTasks, todos, inProgress, complete }) => {
         }
         return t;
       });
-      console.log(modifyTask);
+      //   console.log(modifyTask);
       localStorage.setItem("tasks", JSON.stringify(modifyTask));
       return modifyTask;
     });
   };
+  console.log("a", selectedPriority);
 
+  const filterPriority = tasksToMap?.filter(
+    (fTask) => fTask.priority === selectedPriority
+  );
+  console.log(tasks);
+  console.log(filterPriority);
   return (
     <div
       ref={drop}
       className={`w-80 rounded-md p-2 ${isOver ? "bg-slate-200" : ""}`}
     >
-      {/* <h2>{status} List</h2> */}
       <Header text={text} bg={bg} count={tasksToMap?.length} />
-      {tasksToMap.length > 0 &&
-        tasksToMap?.map((task) => (
-          <Task
-            key={task?.id}
-            task={task}
-            status={status}
-            tasks={tasks}
-            setTasks={setTasks}
-          />
-        ))}
+      {selectedPriority === "All"
+        ? tasksToMap.length > 0 &&
+          tasksToMap?.map((task) => (
+            <Task
+              key={task?.id}
+              task={task}
+              status={status}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
+          ))
+        : filterPriority.map((task) => (
+            <Task
+              key={task?.id}
+              task={task}
+              status={status}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
+          ))}
     </div>
   );
 };
@@ -124,7 +167,7 @@ const Task = ({ task, state, tasks, setTasks }) => {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  console.log(isDragging);
+  //   console.log(isDragging);
   const handleRemove = (id) => {
     const fTasks = tasks?.filter((tas) => tas.id !== id);
     localStorage.setItem("tasks", JSON.stringify(fTasks));
