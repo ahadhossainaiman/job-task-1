@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../provider/AuthProviders";
-import app from "../firebase/firebase.config";
-import { getAuth } from "firebase/auth";
+// import app from "../firebase/firebase.config";
+// import { getAuth } from "firebase/auth";
 // import { db } from "./firebase";
 
-const auth = getAuth(app);
+// const auth = getAuth(app);
 
 const Register = () => {
   const { createUser, updateUserProfile } = useContext(UserContext);
